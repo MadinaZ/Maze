@@ -10,6 +10,6 @@ public class Main {
         Scanner sc= new Scanner(System.in);
         int grid = sc.nextInt();
 
-        Maze maze = new Maze(4);
+        Maze maze = new Maze(grid);
     }
 }
