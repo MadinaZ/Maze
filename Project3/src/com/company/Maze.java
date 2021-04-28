@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Stack;
 
 public class Maze {
@@ -11,7 +12,6 @@ public class Maze {
     Cell grid [][] = new Cell[gridSize][gridSize];
     Stack<Cell> cells = new Stack<>();
 
-    ArrayList<Cell> walls = new ArrayList<>();
     public Maze(int gridSize) {
         this.gridSize = gridSize;
     }
@@ -22,20 +22,32 @@ public class Maze {
         visitedCell = 1;
 
         while(visitedCell < totalCell){
-            if()
+            ArrayList<Cell> neighbors = findNeighbors(currentCell);
+            Random rand = new Random();
+            if(neighbors.size() >= 1){
+                int i = rand.nextInt(neighbors.size());
+                Cell cell = neighbors.get(i);
+                currentCell.removeWall(cell);
+                cells.push(currentCell);
+                currentCell = cell;
+                visitedCell++;
+            }
         }
     }
 
 
-    public void findNeighbors(Cell c){
-        if(c.getX()-1 >= 0 && grid[c.getX() - 1][c.getY()].allWallsIntact() && !grid[c.getX()-1][c.getY()].isVisited())
+    public ArrayList<Cell> findNeighbors(Cell c){
+        ArrayList<Cell> walls = new ArrayList<>();
+
+        if(c.getX()-1 >= 0 && grid[c.getX() - 1][c.getY()].allWallsIntact())
             walls.add(grid[c.getX()-1][c.getY()]);
-        if(c.getY()-1 >= 0 && grid[c.getX()][c.getY()-1].allWallsIntact() && !grid[c.getX()][c.getY()-1].isVisited())
+        if(c.getY()-1 >= 0 && grid[c.getX()][c.getY()-1].allWallsIntact())
             walls.add(grid[c.getX()][c.getY()-1]);
-        if(c.getX()+1 < gridSize && grid[c.getX() + 1][c.getY()].allWallsIntact() && !grid[c.getX()+1][c.getY()].isVisited())
+        if(c.getX()+1 < gridSize && grid[c.getX() + 1][c.getY()].allWallsIntact())
             walls.add(grid[c.getX()+1][c.getY()]);
-        if(c.getY()+1 < gridSize && grid[c.getX()][c.getY()+1].allWallsIntact() && !grid[c.getX()][c.getY()+1].isVisited())
+        if(c.getY()+1 < gridSize && grid[c.getX()][c.getY()+1].allWallsIntact())
             walls.add(grid[c.getX()][c.getY()+1]);
+        return walls;
     }
 
 

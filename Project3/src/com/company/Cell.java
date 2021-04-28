@@ -22,23 +22,6 @@ public class Cell {
         return y;
     }
 
-    public boolean isEast() {
-//        if(east)
-        return east;
-    }
-
-    public boolean isWest() {
-        return west;
-    }
-
-    public boolean isSouth() {
-        return south;
-    }
-
-    public boolean isNorth() {
-        return north;
-    }
-
     public boolean allWallsIntact(){
         return neighbors.size() == 0;
     }
@@ -46,4 +29,30 @@ public class Cell {
     public void setVisited(){ isVisited = true;}
 
     public boolean isVisited(){return  isVisited;}
+
+    /*
+    cell to the left maze:[row][col-1]
+    cell to the right maze:[row][col+1]
+    cell above maze:[row-1][col]
+    cell below maze:[row+1][col]
+     */
+
+    public void removeWall(Cell cell){
+        if(cell.getX() == getX() && cell.getY() == getY()-1){
+
+        }
+
+        else if(cell.getX() == getX() && cell.getY() == getY()+1){
+
+        }
+
+        else if(cell.getX() == getX()-1 && cell.getY() == getY()){
+
+        }
+
+        else if(cell.getX() == getX()+1 && cell.getY() == getY()+1){
+
+        }
+
+    }
 }
