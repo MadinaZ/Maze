@@ -22,23 +22,20 @@ public class Maze {
         visitedCell = 1;
 
         while(visitedCell < totalCell){
-
+            if()
         }
     }
 
-    public void createWalls(Cell c){
-        if(c.getX()-1 >= 0)
+
+    public void findNeighbors(Cell c){
+        if(c.getX()-1 >= 0 && grid[c.getX() - 1][c.getY()].allWallsIntact() && !grid[c.getX()-1][c.getY()].isVisited())
             walls.add(grid[c.getX()-1][c.getY()]);
-        if(c.getY()-1 >= 0)
+        if(c.getY()-1 >= 0 && grid[c.getX()][c.getY()-1].allWallsIntact() && !grid[c.getX()][c.getY()-1].isVisited())
             walls.add(grid[c.getX()][c.getY()-1]);
-        if(c.getX()+1 < gridSize)
+        if(c.getX()+1 < gridSize && grid[c.getX() + 1][c.getY()].allWallsIntact() && !grid[c.getX()+1][c.getY()].isVisited())
             walls.add(grid[c.getX()+1][c.getY()]);
-        if(c.getY()+1 < gridSize)
-            walls.add(grid[c.getX()][c.getY()]);
-    }
-
-    public void findNeighbors(){
-
+        if(c.getY()+1 < gridSize && grid[c.getX()][c.getY()+1].allWallsIntact() && !grid[c.getX()][c.getY()+1].isVisited())
+            walls.add(grid[c.getX()][c.getY()+1]);
     }
 
 
