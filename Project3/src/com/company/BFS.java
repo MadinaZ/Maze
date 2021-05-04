@@ -1,15 +1,19 @@
 package com.company;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+
 
 public class BFS {
     int gridSize;
     Cell grid [][];
     ArrayList<Cell> bfsVisit = new ArrayList<>();
     Color color;
-    private boolean added = false;
+    boolean added = false;
+    boolean checkBfs;
+    boolean BfsShortestPath;
 
     public BFS(int gridSize, Cell grid[][]) {
         this.gridSize = gridSize;
@@ -17,16 +21,17 @@ public class BFS {
     }
 
     public void bfs(){
-        for(int row = 0; row < gridSize; row++)
-            for(int col = 0; col < gridSize; col++)
-                grid[row][col].color = Color.WHITE;
+        for(int i = 0; i < gridSize; i++)
+            for(int j = 0; j < gridSize; j++)
+                grid[i][j].color = Color.WHITE;
         Queue<Cell> queue = new LinkedList<Cell>();
-        //choose first node as starting node
+
         int visit = 0;
         Cell node = grid[0][0];
         node.distance = 0;
         node.color = Color.GRAY;
         node.numberOfVisits = visit;
+
         visit++;
         bfsVisit.add(node);
         queue.add(node);
@@ -34,18 +39,18 @@ public class BFS {
             node = queue.remove();
             if(node.x == gridSize - 1 && node.y == gridSize - 1)
                 added  = true;
-            for(Cell v: node.neighbors)
-                if(v.color == Color.WHITE){
-                    v.color = Color.GRAY;
-                    v.numberOfVisits = visit;
+            for(Cell cell: node.neighbors)
+                if(cell.color == Color.WHITE){
+                    cell.color = Color.GRAY;
+                    cell.numberOfVisits = visit;
                     visit ++;
-                    v.distance = node.distance + 1;
-                    v.predecessor = node;
-                    if(v.x == gridSize - 1 && v.y == gridSize - 1)
+                    cell.distance = node.distance + 1;
+                    cell.predecessor = node;
+                    if(cell.x == gridSize - 1 && cell.y == gridSize - 1)
                         added  = true;
                     if(!added )
-                        bfsVisit.add(v);
-                    queue.add(v);
+                        bfsVisit.add(cell);
+                    queue.add(cell);
                 }
 
             node.color = Color.BLACK;
@@ -53,5 +58,86 @@ public class BFS {
         bfsVisit.add(grid[gridSize-1][gridSize-1]);
     }
 
+    public String printBFSShortestPath(){
+        bfsVisit = new ArrayList<Cell>();
+        Cell node = grid[gridSize-1][gridSize-1];
+        while(node != null){
+            bfsVisit.add(node);
+            node = node.predecessor;
+        }
+        BfsShortestPath = true;
+        String s = displayBFS();
+        BfsShortestPath = false;
+        return s;
+    }
+
+    public String printBFS(){
+        checkBfs = true;
+        String s = displayBFS();
+        checkBfs = false;
+        return s;
+    }
+
+    public String displayBFS(){
+        String[][] chars = new String[gridSize*2 + 1][gridSize*2 + 1];
+        String s = "";
+        for(int i = 0; i < chars.length; i ++){
+            for(int j = 0; j < chars.length; j ++){
+                Cell node = null;
+                if(i % 2 == 1 && j % 2 == 1)
+                    node = grid[i /2][j/2];
+                if((i == 0 && j == 1) || (i == gridSize*2 && j == gridSize*2 - 1))
+                    chars[i][j] = " ";
+                else if(chars[i][j] == null && i % 2 == 0 && j % 2 == 0)
+                    chars[i][j] = "+";
+                else if(i % 2 == 1 && (j == 0 || j == chars[0].length - 1))
+                    chars[i][j] = "|";
+                else if(i == 0 || i == chars.length - 1)
+                    chars[i][j] = "-";
+                else if(node != null){
+                    if(node.west)
+                        chars[i][j - 1] = "|";
+                    else
+                        chars[i][j - 1] = " ";
+                    if(node.east)
+                        chars[i][j + 1] = "|";
+                    else
+                        chars[i][j + 1] = " ";
+                    if(node.north)
+                        chars[i - 1][j] = "-";
+                    if(node.south)
+                        chars[i + 1][j] = "-";
+                    Integer visit = node.numberOfVisits;
+
+                    if(checkBfs && visit < 10 && bfsVisit.contains(node))
+                        chars[i][j] = visit.toString();
+                    else if(checkBfs && (visit >= 10 && visit < 19) && bfsVisit.contains(node)){
+                        visit = visit - 9;
+                        chars[i][j] = visit.toString();
+                    }
+                    else if(checkBfs && (visit >= 19 && visit < 29) && bfsVisit.contains(node)){
+                        visit = visit - 19;
+                        chars[i][j] = visit.toString();
+                    }
+                    else if(checkBfs && (visit >= 29 && visit < 39) && bfsVisit.contains(node)){
+                        visit = visit - 29;
+                        chars[i][j] = visit.toString();
+                    }
+                    else if(BfsShortestPath  && bfsVisit.contains(node))
+                        chars[i][j] = "#";
+                    else
+                        chars[i][j] = " ";
+                }
+                else
+                    chars[i][j] = " ";
+            }
+        }
+        for(int i = 0; i < chars.length; i ++){
+            for(int j = 0; j < chars.length; j ++)
+                s += chars[i][j];
+            s += "\n";
+        }
+        return s;
+    }
 
 }

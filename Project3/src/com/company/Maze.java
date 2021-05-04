@@ -8,15 +8,14 @@ public class Maze {
     int totalCell;
     int visitedCell;
     Cell grid [][];
-    Stack<Cell> cells = new Stack<>();
-    DFS dfs ;
+    Stack<Cell> stack = new Stack<>();
+    private Random rand;
+
 
 
     public Maze(int gridSize) {
         this.gridSize = gridSize;
         grid = new Cell[gridSize][gridSize];
-
-        dfs = new DFS(gridSize, grid);
 
         for(int i = 0; i < gridSize; i++)
             for(int j = 0; j < gridSize; j++)
@@ -24,7 +23,6 @@ public class Maze {
 
         grid[0][0].north = false;
         grid[gridSize-1][gridSize-1].south = false;
-
         createMaze();
     }
 
@@ -35,19 +33,18 @@ public class Maze {
 
         while(visitedCell < totalCell){
             ArrayList<Cell> neighbors = findNeighbors(currentCell);
-            Random rand = new Random();
+             rand = new Random();
             if(neighbors.size() >= 1){
                 int i = rand.nextInt(neighbors.size());
                 Cell cell = neighbors.get(i);
                 currentCell.removeWall(cell);
-                cells.push(currentCell);
+                stack.push(currentCell);
                 currentCell = cell;
-//                currentCell.isVisited();
+                currentCell.setVisited();
                 visitedCell++;
             }
-            else if(!cells.isEmpty()){
-                currentCell = cells.pop();
-
+            else if(!stack.isEmpty()){
+                currentCell = stack.pop();
             }
         }
     }
@@ -68,62 +65,6 @@ public class Maze {
     }
 
 
-//    public void displayMaze(){
-////        ArrayList<Cell> path = new ArrayList<>();
-////        Cell coordinate = grid[gridSize-1][gridSize-1]
-//        grid[0][0].north = false;
-//        grid[gridSize-1][gridSize-1].south = false;
-//
-//        for(int y = 0; y < grid.length; y++){
-//            //horizontal
-//            for(int x = 0; x < grid.length; x++){
-//                Cell coordinate = grid[x][y];
-//                if(coordinate.north == true){
-//                    if(x == grid[0].length-1)
-//                        System.out.println("+-+");
-//                    else
-//                        System.out.println("+-");
-//                }
-//                else{
-//                    if(x == grid[0].length-1)
-//                        System.out.println("+ +");
-//                    else
-//                        System.out.println("+ ");
-//                }
-//            }
-//
-//            //vertical
-//            for(int x = 0; x < grid.length; x++){
-//                if(grid[x][y].west == true){
-//
-//                    if(x == grid[0].length-1){
-//                        if(!grid[x][y].isVisited()){
-//                            System.out.println();
-//                        }
-//                        else
-//                            System.out.println("| |");
-//                    }
-//                } else {
-//                    if (x == grid[0].length - 1) {
-//                        if (grid[x][y].isVisited) {
-//                            System.out.printf("|%d", grid[x][y].finishingTime);
-//                        } else {
-//                            System.out.print("| ");
-//                        }
-//                    }
-//                    else {
-//                        if (grid[x][y].finishingTime != -1) { //if it was visited
-//                            System.out.printf(" %d", grid[x][y].finishingTime);
-//                        }
-//                        else {
-//                            System.out.print("  ");
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//
-//    }
 
     @Override
     public String toString() {
@@ -135,16 +76,12 @@ public class Maze {
                 Cell node = null;
                 if(i % 2 == 1 && j % 2 == 1)
                     node = grid[i /2][j/2];
-                //represents maze entrance and exit
                 if((i == 0 && j == 1) || (i == gridSize*2 && j == gridSize*2 - 1))
                     chars[i][j] = " ";
-                    //represents corners
                 else if(chars[i][j] == null && i % 2 == 0 && j % 2 == 0)
                     chars[i][j] = "+";
-                    //represents top and bottom i
                 else if(i == 0 || i == chars.length - 1)
                     chars[i][j] = "-";
-                    //represents leftmost and rightmost jumn
                 else if(i % 2 == 1 && (j == 0 || j == chars[0].length - 1))
                     chars[i][j] = "|";
                 else if(node != null){
@@ -179,8 +116,13 @@ public class Maze {
         DFS dfs = new DFS(gridSize, grid);
         dfs.Dfs();
         System.out.println(dfs.printDFS());
-        dfs.printDFSShortestPath();
-        System.out.println(dfs.displayMaze());
+        System.out.println(dfs.printDFSShortestPath());
     }
 
+    public void solveBFS(){
+        BFS bfs = new BFS(gridSize, grid);
+        bfs.bfs();
+        System.out.println(bfs.printBFS());
+        System.out.println(bfs.printBFSShortestPath());
+    }
 }

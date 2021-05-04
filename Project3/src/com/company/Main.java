@@ -17,8 +17,9 @@ public class Main {
 
         System.out.println("DFS: ");
         maze.solveDFS();
-//        maze.dfs.Dfs();
-//        maze.dfs.printDFS();
-//        maze.dfs.printDFSShortestPath();
+
+        System.out.println("BFS: ");
+        maze.solveBFS();
+
     }
 }

@@ -1,5 +1,6 @@
 package com.company;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 enum Color{
@@ -12,7 +13,7 @@ public class Cell {
      int y;
     //directions
     public boolean east, west, south, north, isVisited;
-    ArrayList<Cell> neighbors = new ArrayList<>();
+    ArrayList<Cell> neighbors;
     //for DFS
     int discoveryTime;
     int finishingTime;
@@ -24,9 +25,12 @@ public class Cell {
     Cell predecessor;
 
     public Cell(int x, int y) {
+        neighbors = new ArrayList<>();
         this.x = x;
         this.y = y;
         color = Color.WHITE;
+        east = west = north = south = true;
+        isVisited = false;
     }
 
 //    public int getX() { return x; }
@@ -37,43 +41,50 @@ public class Cell {
         return neighbors.size() == 0;
     }
 
-    public void setVisited(){ isVisited = true;}
+    public void setVisited() { isVisited = true;}
 
-    public boolean isVisited(){return  isVisited;}
+    public boolean isVisited() {return  isVisited;}
 
+    @Override
+    public boolean equals(Object o){
+        if(o == null)
+            return false;
+        Cell other = (Cell) o;
+        return other.x == x && other.y == y;
+    }
 
     /*
-    cell to the left maze:[row][col-1]
-    cell to the right maze:[row][col+1]
-    cell above maze:[row-1][col]
-    cell below maze:[row+1][col]
+    cell to the left maze:[x][y-1]
+    cell to the right maze:[x][y+1]
+    cell above maze:[x-1][y]
+    cell below maze:[x+1][y]
      */
     public void removeWall(Cell cell){
         //west
-        if(cell.x == this.x && cell.y == this.y-1){
-            west =false;
+        if(cell.x == x && cell.y == y - 1){
+            west = false;
             cell.east = false;
             neighbors.add(cell);
             cell.neighbors.add(this);
         }
-        //east
+        //cell is east neighbor
         else if(cell.x == x && cell.y == y + 1){
             east = false;
-            cell.east = false;
+            cell.west = false;
             neighbors.add(cell);
             cell.neighbors.add(this);
         }
-        //north
-        else if(cell.x == x-1 && cell.y == y){
+        //cell is north neighbor
+        else if(cell.y == y && cell.x == x - 1){
             north = false;
-            cell.north = false;
+            cell.south = false;
             neighbors.add(cell);
             cell.neighbors.add(this);
         }
-        //south
-        else if(cell.x == x+1 && cell.y == y+1){
+        //cell is south neighbor
+        else if(cell.y == y && cell.x == x + 1){
             south = false;
-            cell.south = false;
+            cell.north = false;
             neighbors.add(cell);
             cell.neighbors.add(this);
         }
