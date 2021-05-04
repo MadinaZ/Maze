@@ -28,9 +28,7 @@ public class Cell {
         neighbors = new ArrayList<>();
         this.x = x;
         this.y = y;
-        color = Color.WHITE;
         east = west = north = south = true;
-        isVisited = false;
     }
 
 //    public int getX() { return x; }
@@ -67,21 +65,21 @@ public class Cell {
             neighbors.add(cell);
             cell.neighbors.add(this);
         }
-        //cell is east neighbor
+        //east
         else if(cell.x == x && cell.y == y + 1){
             east = false;
             cell.west = false;
             neighbors.add(cell);
             cell.neighbors.add(this);
         }
-        //cell is north neighbor
+        //north
         else if(cell.y == y && cell.x == x - 1){
             north = false;
             cell.south = false;
             neighbors.add(cell);
             cell.neighbors.add(this);
         }
-        //cell is south neighbor
+        //south
         else if(cell.y == y && cell.x == x + 1){
             south = false;
             cell.north = false;
