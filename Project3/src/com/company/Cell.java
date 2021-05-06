@@ -86,6 +86,5 @@ public class Cell {
             neighbors.add(cell);
             cell.neighbors.add(this);
         }
-
     }
 }

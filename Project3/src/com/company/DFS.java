@@ -11,7 +11,7 @@ public class DFS {
     Color color;
     private int time;
     boolean added = false;
-
+    int pathLength, cellsVisited;
     boolean check;
     boolean DfsShortestPath;
 
@@ -32,6 +32,7 @@ public class DFS {
             for(Cell node: arr)
                 if(node.color == Color.WHITE)
                     DfsVisit(node);
+
         added = false;
     }
 
@@ -53,16 +54,18 @@ public class DFS {
         current.color = Color.BLACK;
         time = time + 1;
         current.finishingTime = time;
-
+        cellsVisited = dfsVisit.size();
     }
 
     public String printDFSShortestPath(){
         DfsShortestPath = true;
         for(int x = 0; x < dfsVisit.size() - 2; x++)
-            if(dfsVisit.get(x).finishingTime < dfsVisit.get(x+1).finishingTime)
+            if(dfsVisit.get(x).finishingTime < dfsVisit.get(x+1).finishingTime){
                 dfsVisit.remove(x);
+            }
         String s = displayMaze();
         DfsShortestPath = false;
+        pathLength = dfsVisit.size();
         return s;
     }
 
@@ -159,6 +162,18 @@ public class DFS {
             s += "\n";
         }
         return s;
+    }
+
+    public int getCellsVisited(){
+        return cellsVisited;
+    }
+
+    public int getPathLength(){
+        return pathLength;
+    }
+
+    public ArrayList<Cell> getDfsVisit(){
+        return dfsVisit;
     }
 
 }
