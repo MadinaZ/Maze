@@ -40,8 +40,9 @@ public class DFS {
             added = true;
             dfsVisit.add(current);
         }
-        if(!added)
+        if(!added) {
             dfsVisit.add(current);
+        }
         current.color = Color.GRAY;
         time = time + 1;
         current.discoveryTime = time;
@@ -117,6 +118,30 @@ public class DFS {
                     }
                     else if(check && (visit >= 29 && visit < 39) && dfsVisit.contains(node)){
                         visit = visit - 29;
+                        chars[i][j] = visit.toString();
+                    }
+                    else if(check && (visit >= 39 && visit < 49) && dfsVisit.contains(node)){
+                        visit = visit - 39;
+                        chars[i][j] = visit.toString();
+                    }
+                    else if(check && (visit >= 49 && visit < 59) && dfsVisit.contains(node)){
+                        visit = visit - 49;
+                        chars[i][j] = visit.toString();
+                    }
+                    else if(check && (visit >= 59 && visit < 69) && dfsVisit.contains(node)){
+                        visit = visit - 59;
+                        chars[i][j] = visit.toString();
+                    }
+                    else if(check && (visit >= 69 && visit < 79) && dfsVisit.contains(node)){
+                        visit = visit - 69;
+                        chars[i][j] = visit.toString();
+                    }
+                    else if(check && (visit >= 79 && visit < 89) && dfsVisit.contains(node)){
+                        visit = visit - 79;
+                        chars[i][j] = visit.toString();
+                    }
+                    else if(check && (visit >= 89 && visit < 99) && dfsVisit.contains(node)){
+                        visit = visit - 89;
                         chars[i][j] = visit.toString();
                     }
                     else if(DfsShortestPath  && dfsVisit.contains(node))
