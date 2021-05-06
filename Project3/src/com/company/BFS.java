@@ -131,27 +131,27 @@ public class BFS {
                     }
                     else if(checkBfs && (visit >= 39 && visit < 49) && bfsVisit.contains(node)){
                         visit = visit - 39;
-                        chars[i][j] = visit.toString();
+                        chars[i][j] = Integer.toString(visit);
                     }
                     else if(checkBfs && (visit >= 49 && visit < 59) && bfsVisit.contains(node)){
                         visit = visit - 49;
-                        chars[i][j] = visit.toString();
+                        chars[i][j] = Integer.toString(visit);
                     }
                     else if(checkBfs && (visit >= 59 && visit < 69) && bfsVisit.contains(node)){
                         visit = visit - 59;
-                        chars[i][j] = visit.toString();
+                        chars[i][j] = Integer.toString(visit);
                     }
                     else if(checkBfs && (visit >= 69 && visit < 79) && bfsVisit.contains(node)){
                         visit = visit - 69;
-                        chars[i][j] = visit.toString();
+                        chars[i][j] = Integer.toString(visit);
                     }
                     else if(checkBfs && (visit >= 79 && visit < 89) && bfsVisit.contains(node)){
                         visit = visit - 79;
-                        chars[i][j] = visit.toString();
+                        chars[i][j] = Integer.toString(visit);
                     }
                     else if(checkBfs && (visit >= 89 && visit < 99) && bfsVisit.contains(node)){
                         visit = visit - 89;
-                        chars[i][j] = visit.toString();
+                        chars[i][j] = Integer.toString(visit);
                     }
                     else if(BfsShortestPath  && bfsVisit.contains(node))
                         chars[i][j] = "#";
