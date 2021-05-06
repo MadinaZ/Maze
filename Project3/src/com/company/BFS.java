@@ -1,6 +1,7 @@
 package com.company;
 
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -11,6 +12,7 @@ public class BFS {
     Cell grid [][];
     ArrayList<Cell> bfsVisit = new ArrayList<>();
     Color color;
+    int pathLength, cellsVisited;
     boolean added = false;
     boolean checkBfs;
     boolean BfsShortestPath;
@@ -24,7 +26,7 @@ public class BFS {
         for(int i = 0; i < gridSize; i++)
             for(int j = 0; j < gridSize; j++)
                 grid[i][j].color = Color.WHITE;
-        Queue<Cell> queue = new LinkedList<Cell>();
+        Queue<Cell> queue = new LinkedList<>();
 
         int visit = 0;
         Cell node = grid[0][0];
@@ -56,6 +58,7 @@ public class BFS {
             node.color = Color.BLACK;
         }
         bfsVisit.add(grid[gridSize-1][gridSize-1]);
+        cellsVisited = bfsVisit.size();
     }
 
     public String printBFSShortestPath(){
@@ -65,9 +68,12 @@ public class BFS {
             bfsVisit.add(node);
             node = node.predecessor;
         }
+        pathLength= bfsVisit.size();
         BfsShortestPath = true;
         String s = displayBFS();
         BfsShortestPath = false;
+        //store length of path for display later
+        pathLength= bfsVisit.size();
         return s;
     }
 
@@ -107,21 +113,21 @@ public class BFS {
                         chars[i - 1][j] = "-";
                     if(node.south)
                         chars[i + 1][j] = "-";
-                    Integer visit = node.numberOfVisits;
+                    int visit = node.numberOfVisits;
 
                     if(checkBfs && visit < 10 && bfsVisit.contains(node))
-                        chars[i][j] = visit.toString();
+                        chars[i][j] = Integer.toString(visit);
                     else if(checkBfs && (visit >= 10 && visit < 19) && bfsVisit.contains(node)){
                         visit = visit - 9;
-                        chars[i][j] = visit.toString();
+                        chars[i][j] = Integer.toString(visit);
                     }
                     else if(checkBfs && (visit >= 19 && visit < 29) && bfsVisit.contains(node)){
                         visit = visit - 19;
-                        chars[i][j] = visit.toString();
+                        chars[i][j] = Integer.toString(visit);
                     }
                     else if(checkBfs && (visit >= 29 && visit < 39) && bfsVisit.contains(node)){
                         visit = visit - 29;
-                        chars[i][j] = visit.toString();
+                        chars[i][j] = Integer.toString(visit);
                     }
                     else if(BfsShortestPath  && bfsVisit.contains(node))
                         chars[i][j] = "#";
@@ -138,6 +144,17 @@ public class BFS {
             s += "\n";
         }
         return s;
+    }
+
+    //experimental getters
+    public ArrayList<Cell> getBfsVisit(){
+        return bfsVisit;
+    }
+    public int getPathLength(){
+        return pathLength;
+    }
+    public int getCellsVisited(){
+        return cellsVisited;
     }
 
 }
