@@ -43,12 +43,8 @@ public class MazeTest {
     @Description("Loops through grid sizes of 2 to 20 to construct random mazes and be solved")
     public void incrementalSize_Test() {
         //Check for random Mazes of Sizes 2 to 20.
-        for (int i = 1; i <= 10; i++) {
-            if (i <= 5) {
-                generateTestMaze(i);
-            } else if (i == 10) {
-                generateTestMaze(i);
-            }
+        for (int i = 1; i <= 5; i++) {
+            generateTestMaze(i);
         }
     }
 
